@@ -2,6 +2,8 @@ import os
 import sys
 import json
 import subprocess
+import tempfile
+import shutil
 from pathlib import Path
 
 from PySide6.QtWidgets import (
@@ -173,6 +175,8 @@ class TranscribeThread(QThread):
         self.finished.emit(msg)
 
 def extract_audio(video_path, output_path):
+    if not shutil.which("ffmpeg"):
+        return None
     cmd = [
         "ffmpeg",
         "-y",
@@ -187,7 +191,7 @@ def extract_audio(video_path, output_path):
     try:
         subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         return output_path
-    except Exception as e:
+    except Exception:
         return None
 
 def format_timestamp(seconds: float) -> str:
@@ -313,14 +317,17 @@ def translate_text(translator_name, text, src_lang, tgt_lang, keys):
 
 def transcribe_with_translation(input_file, translator_choice, src_lang, tgt_lang, keys, gui_callback=None):
     input_path = Path(input_file)
-    base_path = (BASE_DIR / input_path.stem)
+    base_path = input_path.with_suffix("")
+    temp_created = False
     if input_path.suffix.lower() != ".wav":
-        audio_path = str(BASE_DIR / "temp_audio.wav")
-        extract_audio(str(input_path), audio_path)
+        fd, temp_audio = tempfile.mkstemp(suffix=".wav")
+        os.close(fd)
+        if not extract_audio(str(input_path), temp_audio):
+            return "❌ ffmpeg не найден или ошибка извлечения аудио"
+        audio_path = temp_audio
         temp_created = True
     else:
         audio_path = str(input_path)
-        temp_created = False
 
     try:
         device = "cuda" if os.environ.get("CUDA_VISIBLE_DEVICES") else "cpu"
@@ -354,10 +361,8 @@ def transcribe_with_translation(input_file, translator_choice, src_lang, tgt_lan
                         gui_callback(f"Segment {i}")
             return f"✅ Субтитры сохранены:\n{src_path}\n{tgt_path}"
     finally:
-        if temp_created:
-            temp_audio = BASE_DIR / "temp_audio.wav"
-            if temp_audio.exists():
-                temp_audio.unlink()
+        if temp_created and os.path.exists(audio_path):
+            os.remove(audio_path)
 
 class MainWindow(QMainWindow):
     def __init__(self):
