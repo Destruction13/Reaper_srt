@@ -1,25 +1,65 @@
 # Whisper Translator GUI
 
-This project provides a desktop application built with **PySide6** for transcribing audio or video files using `faster-whisper`. Optionally, it can translate subtitles via several online services.
+---
 
-## Features
-- Choose among multiple translators, including free and paid APIs
-- Select source and target languages via dropdowns
-- Progress bar while transcribing/translating
-- API keys stored in `~/.my_translator_app/api_keys.json`
-- Works with common video and audio formats
+# 🚀 Быстрый старт
 
-## Requirements
-Install dependencies with:
-```bash
-pip install -r requirements.txt
-```
+## 1. **Установите вспомогательные программы:**
 
-You also need `ffmpeg` in your system `PATH` for audio extraction.
+   Всё, что ниже — это **бесплатные и безопасные инструменты**, которые нужны, чтобы программа работала.  
+   Команды типа `git --version` надо вводить **в терминал** (см. ниже👇).
 
-## Usage
-Run the application using Python:
-```bash
-python transcriber_pyside6.py
-```
-On Windows you can simply double-click `run_transcriber.bat`.
+   📌 ***Как открыть терминал:***
+   - На Windows: нажмите `Win + R`, введите `cmd`, нажмите Enter.
+   - Или используйте встроенный терминал в [VS Code](https://code.visualstudio.com/) (там даже удобнее).
+
+   **Сначала установите все вспомогательные программы, а после используйте терминал.**
+
+   ---
+
+   * 🧰 **[Git](https://git-scm.com/downloads)** – нужен для клонирования репозитория.  
+     Проверка установки (вводим в терминале):
+     ```bash
+     git --version
+     ```
+
+   * 🐍 **[Python 3.10.6](https://www.python.org/ftp/python/3.10.6/python-3.10.6-amd64.exe)** – основа всей программы.  
+     При установке **обязательно поставить галочку "Add Python to PATH"**.  
+     Проверка:
+     ```bash
+     python --version
+     ```
+
+   * 📦 **pip** – менеджер пакетов Python. Обычно ставится вместе с Python.  
+     Проверка:
+     ```bash
+     pip --version
+     ```
+
+   * 🖥️ **[Visual Studio Code](https://code.visualstudio.com/)** – *(необязательно, но удобно)*  
+     Лучший редактор, чтобы править код, запускать терминал и не сойти с ума.  
+     Рекомендуемые расширения (*необязательно*):
+     - Python (от Microsoft)
+     - GitLens (для работы с Git)
+     - Better Comments (для заметок в коде)
+
+## 2. **Скачайте проект с GitHub**
+Теперь, когда всё установлено, нужно "вытянуть" код программы к себе на компьютер. 
+**Введите в терминале:**
+
+   ```bash 
+   git clone https://github.com/Destruction13/Reaper_srt
+   cd Reaper_srt
+   ```
+📁 У вас появится папка **Reaper_srt** — это и есть проект.
+
+## **3. Установите зависимости**
+Это библиотеки, без которых программа не сможет работать. Всё установится автоматически:
+   ```bash
+   pip install -r requirements.txt
+   ```
+## 4. **Запускайте программу**
+Когда всё готово, запускаем основную программу:
+   ```bash
+   run_transcriber.bat
+   ```
