@@ -64,7 +64,22 @@
    pip install -r requirements.txt
    ```
 ## 4. **Запускайте программу**
-Когда всё готово, запускаем основную программу:
-   ```bash
-   run_transcriber.bat
-   ```
+Когда всё готово, запускаем основную программу.
+
+**Windows**
+
+```bash
+run_transcriber.bat
+```
+
+**macOS**
+
+```bash
+bash run_transcriber.command
+```
+
+## Отличия macOS и Windows версий
+
+Обе версии работают одинаково и используют `transcriber_pyside6.py`. Разница
+заключается только в стартовых скриптах. В Windows запускайте `run_transcriber.bat`,
+а в macOS — `run_transcriber.command`, который нужно выполнить через `bash`.
